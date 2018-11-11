@@ -1,0 +1,60 @@
+####################
+###
+###   Golang Stuff
+###
+####################
+
+GOPATH="/home/eusebio.olalde/go"; export GOPATH;
+GOBIN="$GOPATH/bin"; export GOBIN;
+GOROOT="/usr/local/go"; export GOROOT;
+PATH=$PATH:$GOROOT/bin:$GOBIN; export PATH;
+
+# IX dirs
+PLATFORM_GO_SRC_DIR="$GOPATH/src/gitlab.internal.casalemedia.com/platform-dev"
+
+downloadGo() {
+	local version=${1:-1.10.2}
+	wget https://storage.googleapis.com/golang/go$version.linux-amd64.tar.gz
+	if [ $? -eq 0 ]; then
+		echo "Downloaded language files"
+	else
+		echo "unable to download Golang $version"
+	fi
+	if [ -e "/usr/local/go/$arg" ]; then
+		echo "Detected an existing installation of go, uninstall previous installation? [y/n]"
+		read answer
+		if [ $answer = "y" ]; then
+			echo "removing old version from usr/local/go"
+			sudo rm /usr/local/go -rf
+		elif [ $answer = "n" ]; then
+			echo "aborting installation"
+			exit 1
+		else
+			echo "invalid input, aborting"
+			exit 1
+		fi
+	fi
+	echo "Installing Go v$version"
+	sudo tar -C /usr/local -xzf go$version.linux-amd64.tar.gz
+	echo "cleaning up"
+	rm -f go$version.linux-amd64.tar.gz
+	echo "installation complete"
+}
+
+gohere () {
+	gopath=( $PWD )
+	GOPATH=${gopath[0]}
+	export GOPATH
+}
+gob() {
+	builder="$(whoami)"
+	branch="$(git rev-parse --abbrev-ref HEAD)"
+	commit="$(git rev-parse HEAD)"
+	timestamp="$(date +%Y-%m-%d-%H-%M)"
+	go build --ldflags '-extldflags "-static" -X main.commit='"$commit"' -X main.builder='"$builder"' -X main.branch='"$branch"' -X "main.timestamp='"${timestamp}"'"'
+}
+goc() {
+	go test -coverprofile=c.out
+	go tool cover -html=c.out
+	rm c.out
+}

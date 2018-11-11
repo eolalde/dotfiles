@@ -1,0 +1,10 @@
+###################
+# pimp the prompt #
+###################
+
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_SHOWUPSTREAM="auto"
+export GIT_PS1_STATESEPARATOR=" | "
+export GIT_PS1_SHOWCOLORHINTS=1
+export PS1='[ \[\e[01;10m\]\u\[\e[01;34m\]@\h\[\e[0m\]:\[\e[00;32m\]\w\[\e[00;33m\]$(__git_ps1 " (%s)")\[\e[0m\] ] ($?)\n\$ '

@@ -1,0 +1,46 @@
+## User Defined
+# Source User Environment Variables
+if [ -f ~/.bash_env ]; then
+    . ~/.bash_env
+fi
+
+# Source User Bash Functions
+if [ -f ~/.bash_functions ]; then
+    . ~/.bash_functions
+fi
+
+# Source Alias definitions.
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# Source python virtual env stuff
+if [ -f ~/.local/bin/virtualenvwrapper.sh ]; then
+    . ~/.local/bin/virtualenvwrapper.sh
+fi
+
+# Source HH setup
+if [ -f ~/.bash_hh ]; then
+    . ~/.bash_hh
+fi
+
+# Source Golang user setup
+if [ -f ~/.bash_go ]; then
+    . ~/.bash_go
+fi
+
+# Start SSH Agent
+if [ -f "${SSH_ENV}" ]; then
+    . "${SSH_ENV}" > /dev/null
+    ps -ef | grep ${SSH_AGENT_PID} | grep 'ssh-agent$' > /dev/null || {
+        start_agent;
+    }
+else
+    start_agent;
+fi
+
+# Pimp the prompt
+if [ -f ~/.bash_prompt ]; then
+    . ~/.bash_prompt
+fi
+

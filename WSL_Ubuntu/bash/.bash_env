@@ -1,0 +1,37 @@
+################################
+## User Environment Variables ##
+################################
+
+# launch linux apps on X-Server
+export DISPLAY=127.0.0.1:0.0
+export GDK_SCALE=1
+export QT_SCALE_FACTOR=1
+
+# paths
+export SSH_ENV=~/.ssh/environment
+export WIN_HOME=/mnt/c/Users/eusebio.olalde/
+export SRC_DIR=~~/code
+export SRC_PLAT='/install/viper-2.0-git'
+export PLATFORM_GO_SRC_DIR="$GOPATH/src/gitlab.internal.casalemedia.com/platform-dev"
+export HOSTNAME=$(hostname);
+export PERL5LIB=$PERL5LIB:'/install/viper-2.0-git/APP/lib/'
+
+# Extend PATH
+export PATH="$PATH:/install/viper-2.0-git/SCM/release-candidate:/install/viper-2.0-git/SCM/reviewboard/devtools/"
+
+# python virtualenv stuff
+export WORKON_HOME=~/.virtualenvs
+export PROJECT_HOME=~/Devel
+
+# HH cmd (Pretty bash history) bashrc configuration
+# add this configuration to ~/.bashrc
+export HH_CONFIG=hicolor         # get more colors
+export HISTCONTROL=ignorespace   # leading space hides commands from history
+export HISTFILESIZE=10000        # increase history file size (default is 500)
+export HISTSIZE=${HISTFILESIZE}  # increase history size (default is 500)
+export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"   # mem/file sync
+
+# bridge variables for dev environment
+export staging_servers=(
+	a900 # AS test-virtual
+)
